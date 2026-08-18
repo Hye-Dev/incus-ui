@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2023 Contributors to Incus <https://github.com/lxc/incus>
+# SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
+# SPDX-License-Identifier: Apache-2.0
+
+# Frequent committers who contribute to Incus UI on their own time can add
+# themselves to the list here so users who feel like sponsoring can find
+# them.
+github:
+ - Hye-Dev
+ - stgraber

@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2025 Contributors to Incus <https://github.com/lxc/incus>
+# SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
+# SPDX-License-Identifier: Apache-2.0
+
+blank_issues_enabled: true
+contact_links:
+  - name: Support question
+    url: https://discuss.linuxcontainers.org
+    about: Please ask and answer questions here.
