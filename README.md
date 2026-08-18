@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 Incus UI allows you to manage your [Incus](https://github.com/lxc/incus) deployment from the web.
 
 ## Roadmap
-Incus UI is currently in it's infancy and **its foundation is still under construction** 🏗️. There are no releases yet.
+Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️. There are no releases yet.
 
 We are actively working on putting together a detailed roadmap.
 
