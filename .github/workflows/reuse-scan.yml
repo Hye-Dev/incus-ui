@@ -1,0 +1,212 @@
+# SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
+# SPDX-License-Identifier: Apache-2.0
+
+# This workflow definition comes from the base branch (`pull_request_target`),
+# so a PR cannot replace the scanner with code that forges its result. The scan
+# job still has read-only permissions, no secrets, and never executes project
+# code. All Python processes run outside the checkout with unsafe import-path
+# prepending disabled. The separately-permissioned report job receives the PR
+# number and head SHA directly from the trusted event, never from the artifact.
+
+name: REUSE Compliance Scan
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reuse-compliance-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: Scan changed files for REUSE compliance
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      PR_SOURCE: ${{ github.workspace }}/pr-source
+      PYTHONSAFEPATH: "1"
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr-source
+          fetch-depth: 1
+          persist-credentials: false
+          allow-unsafe-pr-checkout: true
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+
+      - name: Install reuse
+        working-directory: ${{ runner.temp }}
+        run: pip install "reuse[charset-normalizer]==6.2.0"
+
+      - name: Prepare artifact directory
+        working-directory: ${{ runner.temp }}
+        run: mkdir -p "$RUNNER_TEMP/reuse-artifact"
+
+      # reuse exits non-zero for ANY repo-wide non-compliance, including
+      # pre-existing issues unrelated to this PR — that's fine, this job's
+      # own exit code is not the PR gate (reuse-report.yml computes the real
+      # verdict, scoped to changed files, from this JSON). The report is
+      # written outside the checkout so it can never be picked up as an
+      # undocumented file by the same lint run.
+      - name: Run reuse lint
+        continue-on-error: true
+        working-directory: ${{ runner.temp }}
+        run: reuse --root "$PR_SOURCE" lint --json > "$RUNNER_TEMP/reuse-artifact/reuse-lint.json"
+
+      # `reuse --root /absolute/path` reports some non-compliant paths as
+      # absolute even though files[].path stays relative. Normalize only the
+      # fields whose schema contains paths so the report can compare them with
+      # GitHub's repository-relative changed-file names.
+      - name: Normalize report paths
+        working-directory: ${{ runner.temp }}
+        run: |
+          python3 <<'PYEOF'
+          import json
+          import os
+          from pathlib import Path
+
+          artifact_path = Path(os.environ["RUNNER_TEMP"]) / "reuse-artifact" / "reuse-lint.json"
+          project_root = Path(os.path.abspath(os.environ["PR_SOURCE"]))
+
+          with artifact_path.open() as f:
+              report = json.load(f)
+
+          def project_relative(value):
+              candidate = Path(value)
+              if candidate.is_absolute():
+                  candidate = candidate.relative_to(project_root)
+              else:
+                  candidate = Path(os.path.normpath(candidate))
+              if candidate.is_absolute() or candidate.parts[:1] == ("..",):
+                  raise ValueError(f"REUSE reported a path outside the project: {value!r}")
+              return candidate.as_posix()
+
+          for file_report in report["files"]:
+              file_report["path"] = project_relative(file_report["path"])
+          for key in ("missing_copyright_info", "missing_licensing_info", "read_errors"):
+              report["non_compliant"][key] = [
+                  project_relative(value) for value in report["non_compliant"][key]
+              ]
+
+          with artifact_path.open("w") as f:
+              json.dump(report, f)
+          PYEOF
+
+      # Drafts fixes for files missing SPDX info, so reuse-report.yml can
+      # offer them as one-click "suggested change" review comments. This is
+      # a mechanical text transform (same trust level as `reuse lint` above)
+      # — it never runs with a real identity, only a placeholder token, since
+      # this job has no reliable access to PR commit trailers and must not
+      # gain any more privilege/API surface than it already has. The real
+      # contributor identity is substituted in later, by reuse-report.yml,
+      # which is the only workflow trusted to read PR commit data.
+      #
+      # `--fallback-dot-license` (not `--skip-unrecognised`) so a file with
+      # no recognised comment syntax still gets *something* — a `.license`
+      # sidecar — rather than being silently left with no remediation at
+      # all. missing_licensing_info is always a subset of
+      # missing_copyright_info (a file missing everything is trivially
+      # missing copyright too), so the second pass is deliberately run only
+      # against the set difference — otherwise those files would be
+      # annotated twice.
+      - name: Draft SPDX header suggestions
+        continue-on-error: true
+        working-directory: ${{ runner.temp }}
+        run: |
+          python3 <<'PYEOF'
+          import json
+          import os
+          import subprocess
+
+          artifact_dir = os.path.join(os.environ["RUNNER_TEMP"], "reuse-artifact")
+          pr_source = os.environ["PR_SOURCE"]
+
+          with open(os.path.join(artifact_dir, "reuse-lint.json")) as f:
+              report = json.load(f)
+
+          nc = report["non_compliant"]
+          missing_all = set(nc["missing_licensing_info"])
+          missing_copyright_only = set(nc["missing_copyright_info"]) - missing_all
+
+          def annotate(files, extra_flags):
+              if not files:
+                  return
+              subprocess.run(
+                  [
+                      "reuse", "--root", pr_source, "annotate",
+                      "--copyright", "@@REUSE_SUGGEST_IDENTITY@@",
+                      "--exclude-year",
+                      # REUSE spec 3.3 explicitly permits adding '(C)', '(c)'
+                      # or '©' after the SPDX-FileCopyrightText prefix — the
+                      # symbol alone, not the redundant "Copyright" word too.
+                      "--copyright-prefix", "spdx-symbol",
+                      "--fallback-dot-license",
+                      *extra_flags,
+                      *(os.path.join(pr_source, file) for file in sorted(files)),
+                  ],
+                  check=False,
+              )
+
+          # No SPDX info at all — safe to force the project default license,
+          # since the DCA already treats an undeclared part as Apache-2.0.
+          annotate(missing_all, ["--license", "Apache-2.0"])
+          # License already declared, only copyright is missing — no
+          # --license flag, so an existing (possibly differential) license
+          # is left untouched.
+          annotate(missing_copyright_only, [])
+          PYEOF
+
+      - name: Capture annotate diff
+        working-directory: ${{ runner.temp }}
+        run: |
+          git -C "$PR_SOURCE" add -A
+          git -C "$PR_SOURCE" diff --cached --no-color > "$RUNNER_TEMP/reuse-artifact/annotate.diff"
+
+      # JSON preserves every legal filename exactly, including embedded
+      # newlines that would make line-delimited `ls` output ambiguous.
+      - name: Capture LICENSES/ listing
+        working-directory: ${{ runner.temp }}
+        run: |
+          python3 <<'PYEOF'
+          import json
+          import os
+          from pathlib import Path
+
+          licenses_dir = Path(os.environ["PR_SOURCE"]) / "LICENSES"
+          entries = os.listdir(licenses_dir) if licenses_dir.is_dir() else []
+          output = Path(os.environ["RUNNER_TEMP"]) / "reuse-artifact" / "licenses_dir.json"
+          with output.open("w") as f:
+              json.dump(entries, f)
+          PYEOF
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reuse-report
+          path: ${{ runner.temp }}/reuse-artifact
+          retention-days: 1
+
+  report:
+    name: Report REUSE compliance
+    needs: scan
+    if: always() && needs.scan.result != 'cancelled'
+    permissions:
+      actions: read
+      pull-requests: write
+      statuses: write
+    uses: ./.github/workflows/reuse-report.yml
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      head_sha: ${{ github.event.pull_request.head.sha }}
