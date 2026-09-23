@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
+# SPDX-License-Identifier: Apache-2.0
+
+name: DCO Verification
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+concurrency:
+  group: dco-verification-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  dco_check:
+    name: Check DCO
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
+    steps:
+      # Bootstrap status reporting must work without repository scripts.
+      - name: Mark check as pending
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const language = { description: 'Checking every PR commit for a matching DCO sign-off.' };
+            const { owner, repo } = context.repo;
+            await github.rest.repos.createCommitStatus({
+              owner, repo, sha: context.payload.pull_request.head.sha,
+              state: 'pending', context: 'DCO Verification', description: language.description,
+              target_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`,
+            });
+
+      - name: Check out trusted workflow scripts
+        id: checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
+
+      - name: Check DCO, report, and gate the PR head
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            await require("./trusted/.github/scripts/dco.cjs")({ github, context, core });
+
+      - name: Report checkout failure
+        if: always() && steps.checkout.outcome != 'success'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const language = { description: 'Trusted workflow scripts could not be checked out. See the workflow logs.' };
+            const { owner, repo } = context.repo;
+            await github.rest.repos.createCommitStatus({
+              owner, repo, sha: context.payload.pull_request.head.sha,
+              state: 'error', context: 'DCO Verification', description: language.description,
+              target_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`,
+            });

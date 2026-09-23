@@ -1,21 +1,48 @@
 version = 1
 
+# Code Contributions are Submitted Under Apache 2.0 by Default
+[[annotations]]
+path = "**"
+incus-ui-default-attribution = true
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "Contributors to Incus UI <https://github.com/lxc/incus-ui>"
+
+# DCO
 [[annotations]]
 path = ["docs/contributing/code/DCO-1.1.txt"]
 SPDX-FileCopyrightText = "(C) 2004, 2006 The Linux Foundation and its contributors"
 SPDX-License-Identifier = "LicenseRef-DCO-1.1"
 
+# Differential Licensing Agent Skill
 [[annotations]]
-path = ["AGENTS.md", "CLAUDE.md", ".agents/skills/external-information/SKILL.md", ".claude/agents/dirty-room.md", ".codex/agents/dirty-room.toml"]
-SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
-SPDX-License-Identifier = "Apache-2.0"
+path = [".agents/skills/differential-licensing/references/reuse-spec-3.3.md"]
+precedence = "override"
+SPDX-FileCopyrightText = "2019 Free Software Foundation Europe e.V."
+SPDX-License-Identifier = "CC-BY-SA-4.0"
 
 [[annotations]]
-path = [".gitignore", "package.json", "package-lock.json"]
-SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
+path = [
+    ".agents/skills/differential-licensing/SKILL.md",
+    ".claude/skills/differential-licensing/SKILL.md"
+    ]
+SPDX-FileCopyrightText = [
+    "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>",
+    "2026 Stéphane Graber <stgraber@stgraber.org>"
+]
 SPDX-License-Identifier = "Apache-2.0"
 
+# People
+#--- Joseph Maldjian
 [[annotations]]
-path = ["package.json", "package-lock.json"]
+path = [".agents/skills/commit-messages/guidelines.md"]
+SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
+SPDX-License-Identifier = "Apache-2.0"
+precedence = "aggregate"
+
+[[annotations]]
+path = [
+    ".agents/skills/commit-messages/SKILL.md",
+    ".claude/skills/commit-messages/SKILL.md"
+    ]
 SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
 SPDX-License-Identifier = "Apache-2.0"
