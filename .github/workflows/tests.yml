@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
+# SPDX-License-Identifier: Apache-2.0
+
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: GitHub workflow tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Tests execute the proposed code with a read-only token and no saved
+      # credentials. Do not change this to pull_request_target.
+      - name: Check out code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+
+      - name: Install REUSE for integration tests
+        run: pip install "reuse[charset-normalizer]==6.2.0"
+
+      - name: GitHub Workflow tests
+        run: |
+          node --test tests/github/*.test.cjs
+          python -B -m unittest discover -s tests/github
