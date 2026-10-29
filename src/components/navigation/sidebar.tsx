@@ -432,7 +432,7 @@ export function UiSidebar() {
 			<SidebarHeader>
 				<div className="flex w-full">
 					<img
-						src={"https://linuxcontainers.org/static/img/containers.svg"}
+						src="https://linuxcontainers.org/static/img/containers.svg"
 						alt="Linux Containers logo"
 						className="group-data-[collapsible=icon]:w-8 w-10 shrink-0 transition-all duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]"
 					/>
