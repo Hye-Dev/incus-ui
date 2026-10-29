@@ -9,7 +9,7 @@ All contributions to this project are made under the [Apache License, Version 2.
 If you'd like to help out Incus UI users or if there's something you'd like to discuss with the greater community, become a member of the [forum](https://discuss.linuxcontainers.org). This is the best place to make your voice heard and help shape the roadmap.
 
 ## Reporting Bugs & Requesting Features
-If you encounter a bug or would like to request a feature, please [file an issue on our GitHub](https://github.com/lxc/incus-ui/issues/new). These must be filed by humans, not LLMs.
+If you encounter a bug or would like to request a feature, please [file an issue on our GitHub](https://github.com/lxc/incus-ui/issues/new/choose). These must be filed by humans, not LLMs.
 <details>
 <summary>
 See more on LLMs & AI tooling

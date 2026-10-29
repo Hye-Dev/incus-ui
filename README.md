@@ -4,30 +4,68 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 # Incus UI
-Incus UI allows you to manage your [Incus](https://github.com/lxc/incus) deployment from the web.
+Manage your [Incus](https://github.com/lxc/incus) deployment from the web.
+
+## Showcase
+<img width="3588" height="2160" alt="localhost_3000_ui_instances (1)" src="https://github.com/user-attachments/assets/ac32ebb4-12ea-412b-9ae8-6715bf29a282" />
+
+<p align="center">Incus UI Application Shell</p>
 
 ## Roadmap
-Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️. There are no releases yet.
+Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️. The first release (v0.1) is scheduled for 11/12/2026, which will cement this foundation. From there, robust primitive implementation will begin.
 
-We are currently scaffolding the foundation of the codebase & will be releasing a detailed roadmap shortly after.
+We follow a bi-weekly release cycle, shipping a release alongside each monthly Incus feature update, and an additional release in-between.
 
-<!-- I will publish a concrete roadmap before repo publish! This is placeholder for scaffolding. -->
+For a holistic detailed roadmap for each planned version, see our [GitHub Milestones](https://github.com/lxc/incus-ui/milestones).
 
-<!-- We are currently delivering [CHANNEL] releases on a [x] cadence -->
+Below is a high-level summary of our progress supporting the foundational Incus primitives and their target releases. This list will be updated as more support is implemented over time.
 
-<!-- Below is a high-level summary of our progress in supporting the foundational Incus primitives: -->
+- [ ] **Projects**
+  - [ ] Listing & switching (v0.1).
+- [ ] **Server/Cluster**
+  - [ ] TLS Client Certificate Authentication (v0.1)
+  - [ ] OpenID Connect (v0.1)
+  - [ ] CLI Authentication Flows (v0.1)
 
-<!-- We are actively working on completing the UI implementation for all Incus primitives to provide a comprehensive management experience. -->
+- [ ] **Instances**
+- [ ] **Storage**
+- [ ] **Networks**
+- [ ] **Images**
+- [ ] **Profiles**
 
-<!-- See our [GitHub Milestones](https://github.com/lxc/incus-ui) for more detail.
- -->
+## Installation
+### Prerequisites
+Incus UI supports the latest Incus release [in each actively maintained Incus channel](https://linuxcontainers.org/incus/docs/main/support/), starting with Incus 7. <!-- The [release notes](https://github.com/lxc/incus-ui/releases) contain the Incus versions supported by each Incus UI release. -->
 
-<!-- ## Showcase -->
+### Instructions
+#### 1. Download an Incus UI Archive
+##### Edge Builds
+As the first version of Incus UI has not yet released, this is the **only version available** to install until 11/12/2026.
 
-<!-- ## Installation -->
-<!-- ### Prebuilt Archive -->
-<!-- No prebuilt archives until we get a preview out. We don't want to deliver an experience that isn't functional for a first impression. Leave to developers for now. -->
+Edge builds are compiled as code is merged into the main branch. These <!-- are not officially supported, however, --> grant you access to features before they appear in the upcoming release.
+
+Download the `incus-ui.tar.gz` artifact from a successful run of the [Build Edge workflow](https://github.com/lxc/incus-ui/actions/workflows/build-edge.yml). GitHub Actions downloads artifacts as zip files, so unzip the download first to obtain `incus-ui.tar.gz`.
+
+#### 2. Extract the archive to your Incus UI directory
+
+If you installed Incus using a Zabbly package, use `/opt/incus/ui` as follows:
+```
+mkdir -p /opt/incus/ui
+tar -xzf incus-ui.tar.gz -C /opt/incus/ui
+```
+
+If you installed Incus through another route, set the `INCUS_UI` environment variable for `incusd` to your preferred path, and extract Incus UI there.
+
+If you have already previously installed a UI to this path, you will need to remove it (e.g. `rm -r /opt/incus/ui`).
+
+#### 3. Restart Incus
+If you use systemd, use:
+```
+systemctl restart incus
+```
+
+### Accessing Incus UI
+Simply visit your Incus host in the browser, and Incus UI will be served.
 
 <!-- ### Build from Source -->
-<!-- Targeted at developers. Note: platform-agnostic. -->
 

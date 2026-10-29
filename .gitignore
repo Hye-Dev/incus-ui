@@ -2,7 +2,17 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # npm
-node_modules/
+node_modules
+
+# tanstack
+.tanstack
 
 # macOS
 .DS_Store
+
+# build
+dist
+
+# secrets
+*.local
+.env
