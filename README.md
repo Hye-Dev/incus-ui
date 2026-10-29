@@ -44,15 +44,14 @@ As the first version of Incus UI has not yet released, this is the **only versio
 
 Edge builds are compiled as code is merged into the main branch. These <!-- are not officially supported, however, --> grant you access to features before they appear in the upcoming release.
 
-<!-- TODO: ADD LINK -->
-Download the `incus-ui.tar.gz` artifact from a successful run of the Build Edge workflow. Github Actions downloads artifacts as zip files, so unzip the download first to obtain `incus-ui.tar.gz`.
+Download the `incus-ui.tar.gz` artifact from a successful run of the [Build Edge workflow](https://github.com/lxc/incus-ui/actions/workflows/build-edge.yml). GitHub Actions downloads artifacts as zip files, so unzip the download first to obtain `incus-ui.tar.gz`.
 
 #### 2. Extract the archive to your Incus UI directory
 
 If you installed Incus using a Zabbly package, use `/opt/incus/ui` as follows:
 ```
 mkdir -p /opt/incus/ui
-sudo tar -xzf incus-ui.tar.gz
+tar -xzf incus-ui.tar.gz -C /opt/incus/ui
 ```
 
 If you installed Incus through another route, set the `INCUS_UI` environment variable for `incusd` to your preferred path, and extract Incus UI there.
