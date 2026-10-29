@@ -1,0 +1,4 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: Copyright (c) 2023 shadcn
+
+export { cn } from "cn"

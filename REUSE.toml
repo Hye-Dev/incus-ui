@@ -42,7 +42,9 @@ precedence = "aggregate"
 [[annotations]]
 path = [
     ".agents/skills/commit-messages/SKILL.md",
-    ".claude/skills/commit-messages/SKILL.md"
+    ".claude/skills/commit-messages/SKILL.md",
+    "components.json",
+    "tsconfig.json"
     ]
 SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
 SPDX-License-Identifier = "Apache-2.0"
