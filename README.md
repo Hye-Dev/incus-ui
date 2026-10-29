@@ -7,7 +7,9 @@ SPDX-License-Identifier: Apache-2.0
 Manage your [Incus](https://github.com/lxc/incus) deployment from the web.
 
 ## Showcase
+<img width="3588" height="2160" alt="localhost_3000_ui_instances (1)" src="https://github.com/user-attachments/assets/ac32ebb4-12ea-412b-9ae8-6715bf29a282" />
 
+<p align="center">Incus UI Application Shell</p>
 
 ## Roadmap
 Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️. The first release (v0.1) is scheduled for 11/12/2026, which will cement this foundation. From there, robust primitive implementation will begin.
@@ -18,18 +20,18 @@ For a holistic detailed roadmap for each planned version, see our [GitHub Milest
 
 Below is a high-level summary of our progress supporting the foundational Incus primitives and their target releases. This list will be updated as more support is implemented over time.
 
-### - [ ] Projects
-- [ ] Listing & switching (v0.1).
-### - [ ] Server/Cluster
-- [ ] TLS Client Certificate Authentication (v0.1)
-- [ ] OpenID Connect (v0.1)
-- [ ] CLI Authentication Flows (v0.1)
+- [ ] **Projects**
+  - [ ] Listing & switching (v0.1).
+- [ ] **Server/Cluster**
+  - [ ] TLS Client Certificate Authentication (v0.1)
+  - [ ] OpenID Connect (v0.1)
+  - [ ] CLI Authentication Flows (v0.1)
 
-### - [ ] Instances
-### - [ ] Storage
-### - [ ] Networks
-### - [ ] Images
-### - [ ] Profiles
+- [ ] **Instances**
+- [ ] **Storage**
+- [ ] **Networks**
+- [ ] **Images**
+- [ ] **Profiles**
 
 ## Installation
 ### Prerequisites
