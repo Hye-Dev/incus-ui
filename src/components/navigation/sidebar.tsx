@@ -16,6 +16,7 @@ import {
 } from "@tabler/icons-react";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { useLayoutEffect, useRef, useState } from "react";
+import logo from "@/assets/logo.svg";
 import {
 	Sidebar,
 	SidebarContent,
@@ -432,7 +433,7 @@ export function UiSidebar() {
 			<SidebarHeader>
 				<div className="flex w-full">
 					<img
-						src="https://linuxcontainers.org/static/img/containers.svg"
+						src={logo}
 						alt="Linux Containers logo"
 						className="group-data-[collapsible=icon]:w-8 w-10 shrink-0 transition-all duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]"
 					/>
