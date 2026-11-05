@@ -7,12 +7,6 @@ incus-ui-default-attribution = true
 SPDX-License-Identifier = "Apache-2.0"
 SPDX-FileCopyrightText = "Contributors to Incus UI <https://github.com/lxc/incus-ui>"
 
-# DCO
-[[annotations]]
-path = ["docs/contributing/code/DCO-1.1.txt"]
-SPDX-FileCopyrightText = "(C) 2004, 2006 The Linux Foundation and its contributors"
-SPDX-License-Identifier = "LicenseRef-DCO-1.1"
-
 # Differential Licensing Agent Skill
 [[annotations]]
 path = [".agents/skills/differential-licensing/references/reuse-spec-3.3.md"]

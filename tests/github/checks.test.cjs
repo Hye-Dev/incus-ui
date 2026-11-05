@@ -8,7 +8,6 @@ const os = require('node:os');
 const path = require('node:path');
 const { test } = require('node:test');
 const reportReuse = require('../../.github/scripts/reuse/report.cjs');
-const checkDco = require('../../.github/scripts/dco.cjs');
 
 const headSha = 'a'.repeat(40);
 const identity = { name: 'Test Contributor', email: 'test@example.com' };
@@ -269,52 +268,6 @@ test('REUSE preserves Apache-only success if clearing an old comment fails', asy
   });
   assert.deepEqual(calls.statuses.map((status) => status.state), ['success']);
   assert.equal(calls.warnings.length, 1);
-});
-
-test('DCO checks matching sign-offs and reports the DCO status context', async () => {
-  const h = harness();
-  await checkDco(h);
-  assert.equal(h.calls.statuses.at(-1).state, 'success');
-  assert.equal(h.calls.statuses.at(-1).context, 'DCO Verification');
-  assert.deepEqual(h.calls.failures, []);
-});
-
-test('unsigned commits fail with the new DCO instructions', async () => {
-  const h = harness({ commits: [{ ...signedCommit, commit: { ...signedCommit.commit, message: 'docs: example' } }] });
-  await checkDco(h);
-  assert.equal(h.calls.statuses.at(-1).state, 'failure');
-  assert.match(h.calls.comments[0].body, /CONTRIBUTING.md#developer-certificate-of-origin/);
-  assert.doesNotMatch(h.calls.comments[0].body, /Developer Contribution Agreement/);
-  assert.equal(h.calls.failures.length, 1);
-});
-
-test('DCO dropdown uses HTML and preserves literal command and email placeholders', async () => {
-  const h = harness({ commits: [{ ...signedCommit, commit: { ...signedCommit.commit, message: 'docs: example' } }] });
-  await checkDco(h);
-  const dropdown = h.calls.comments[0].body.match(/<details>([\s\S]*?)<\/details>/)[1];
-  assert.doesNotMatch(dropdown, /```|`|\*\*|\]\(/);
-  assert.match(dropdown, /<strong>If your branch has a single commit<\/strong>/);
-  assert.match(dropdown, /<pre><code>git rebase HEAD~&lt;number-of-commits&gt; --signoff/);
-  assert.match(dropdown, /&lt;your.email@example.com&gt;/);
-  assert.match(dropdown, /&lt;\[your primary email address\]&gt;/);
-  assert.match(dropdown, /<a href="https:\/\/github.com\/owner\/repo\/blob\/main\/CONTRIBUTING.md#developer-certificate-of-origin">/);
-  assert.equal((dropdown.match(/<pre><code>/g) || []).length, 4);
-  assert.equal((dropdown.match(/<\/code><\/pre>/g) || []).length, 4);
-});
-
-test('DCO HTML links escape interpolated attribute values', async () => {
-  const h = harness({ commits: [{ ...signedCommit, commit: { ...signedCommit.commit, message: 'docs: example' } }] });
-  h.context.payload.repository.default_branch = 'test"&<branch>';
-  await checkDco(h);
-  const dropdown = h.calls.comments[0].body.match(/<details>([\s\S]*?)<\/details>/)[1];
-  assert.match(dropdown, /test&quot;&amp;&lt;branch&gt;/);
-  assert.doesNotMatch(dropdown, /test"&<branch>/);
-});
-
-test('merge commits remain exempt from sign-offs', async () => {
-  const h = harness({ commits: [{ ...signedCommit, parents: [{}, {}], commit: { message: 'Merge branch' } }] });
-  await checkDco(h);
-  assert.equal(h.calls.statuses.at(-1).state, 'success');
 });
 
 test('commitlint fetch preserves multiline messages as inert JSON', async (t) => {

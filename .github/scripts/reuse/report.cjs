@@ -79,7 +79,7 @@ module.exports = async ({ github, context, core }) => {
   }
   const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
   const defaultBranch = context.payload.repository.default_branch;
-  const guidelinesUrl = `https://github.com/${owner}/${repo}/blob/${defaultBranch}/docs/contributing/code/differential-part-guidelines.md`;
+  const guidelinesUrl = `https://github.com/${owner}/${repo}/blob/${defaultBranch}/CONTRIBUTING.md#contributing-under-a-different-license`;
   const artifactDir = process.env.ARTIFACT_DIR;
 
   function escapedScalar(value, maxLength = MAX_DISPLAY_LENGTH) {

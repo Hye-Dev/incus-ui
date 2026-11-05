@@ -4,52 +4,204 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 # Contributing
-All contributions to this project are made under the [Apache License, Version 2.0](./LICENSE) unless otherwise indicated & must adhere to the [Code of Conduct](https://github.com/lxc/incus-ui/blob/main/CODE_OF_CONDUCT.md).
 
-If you'd like to help out Incus UI users or if there's something you'd like to discuss with the greater community, become a member of the [forum](https://discuss.linuxcontainers.org). This is the best place to make your voice heard and help shape the roadmap.
+The Incus UI team appreciates contributions to the project, through pull requests, issues on the [GitHub repository](https://github.com/lxc/incus-ui/issues), or discussions or questions on the [forum](https://discuss.linuxcontainers.org).
 
-## Reporting Bugs & Requesting Features
-If you encounter a bug or would like to request a feature, please [file an issue on our GitHub](https://github.com/lxc/incus-ui/issues/new/choose). These must be filed by humans, not LLMs.
-<details>
-<summary>
-See more on LLMs & AI tooling
-</summary>
+Check the following guidelines before contributing to the project.
+
+## Code of Conduct
+
+When contributing, you must adhere to the Code of Conduct, which is available at: [`https://github.com/lxc/incus-ui/blob/main/CODE_OF_CONDUCT.md`](https://github.com/lxc/incus-ui/blob/main/CODE_OF_CONDUCT.md)
+
+## License and copyright
+
+By default, any contribution to this project is made under the Apache
+2.0 license.
+
+The author of a change remains the copyright holder of their code
+(no copyright assignment).
+
+### Licensing and copyright metadata
+
+This project follows the [REUSE Specification](https://reuse.software/spec-3.3/) so that every file states its license and copyright. Every commit must be self-contained: licensing must be correctly indicated as of that commit alone.
+
+Contributions made under the default Apache 2.0 license are covered by the blanket declaration in [`REUSE.toml`](/REUSE.toml). You only need to add metadata of your own when you want to claim copyright on a file or when you contribute something under a different license.
+
+The [`reuse`](https://reuse.readthedocs.io/en/stable/readme.html#install) CLI tool can help with this. `reuse download`, `reuse lint` and `reuse annotate` are the useful ones, and `pipx run reuse` works without installing it.
+
+### Contributing under a different license
+
+You're welcome to contribute code that's licensed differently from the rest of the project, so long as it remains compatible with the Apache 2.0 license.
+
+Generally:
+
+- **Accepted:** permissive licenses like MIT, BSD (2-Clause or 3-Clause), ISC, and similar.
+- **Reviewed case by case:** MPL, CDDL and EPL. These are weak-copyleft licenses carrying a per-file share-alike obligation, so modifications to that specific file must remain under the same license if distributed. Since the obligation is ongoing, they're always reviewed individually.
+- **Not accepted, in any form:** GPL, LGPL, AGPL or similar copyleft licenses. Even re-implementing similar logic after seeing copyleft code could still produce a derivative work under that code's license, so be careful!
+
+Licenses we've accepted before are present in the [`LICENSES/`](/LICENSES/) folder.
+
+To contribute such code:
+
+1. Find your license in the [SPDX License List](https://spdx.org/licenses/). The value in the "Identifier" column is your `SPDX-License-Identifier`.
+
+2. Mark the contribution. If it's a **new file**, add a comment header:
+
+<!-- REUSE-IgnoreStart -->
+
+   ```
+   SPDX-FileCopyrightText: 2026 First Last <email>
+   SPDX-License-Identifier: MIT
+   ```
+
+<!-- REUSE-IgnoreEnd -->
+
+   If it's **part of an existing file**, enclose that part in comments:
+
+<!-- REUSE-IgnoreStart -->
+
+   ```
+   SPDX-SnippetBegin
+   SPDX-SnippetCopyrightText: 2026 First Last <email>
+   SPDX-License-Identifier: MIT
+
+   [part]
+
+   SPDX-SnippetEnd
+   ```
+
+<!-- REUSE-IgnoreEnd -->
+
+   If the file can't carry comments, add an entry to [`REUSE.toml`](/REUSE.toml) instead.
+
+3. If the full text of that license isn't already in `LICENSES/`, add it as `LICENSES/[SPDX-License-Identifier].txt` (for example `LICENSES/MIT.txt`). `reuse download MIT` will fetch it for you.
+
+4. List the licenses at the beginning of your pull request description, for example:
+
+   ```
+   **Differential Licenses:** MIT, ISC
+   ```
+
+The example implementations above are opinionated to make compliance easier to understand. You don't *have* to follow them; any indication compliant with the REUSE Specification is acceptable.
+
 <!--
 SPDX-SnippetBegin
 SPDX-SnippetCopyrightText: 2026 Stéphane Graber <stgraber@stgraber.org>
 -->
-<p>We do NOT allow direct filing of issues by LLMs.</p>
 
-<p>We REQUIRE a human being to go through our issue reporting form on GitHub and accurately describe their issue and provide all needed information.</p>
+## Policy on the use of Large Language Models (LLMs) and AI tooling
 
-<p>The more concise and to the point the issue is, the more likely it is to be understood, tracked down, and resolved quickly.</p>
+### For issue reporting
 
-<p>Long winded AI written essays can easily look overwhelming and cause our maintainers and other contributors to just entirely skip the issue to focus their energy on something else.</p>
+We do NOT allow direct filing of issues by LLMs.
 
-<p>We also don't benefit from AI generated root cause analysis or proposed fixes in those issues. If you yourself understand the code base well enough to go through that content and suggested fix, then turn it into a pull request and submit it yourself. Otherwise, please limit your report to describing the issue at hand and we'll take it from there.</p>
+We REQUIRE a human being to go through our issue reporting form on
+Github and accurately describe their issue and provide all needed
+information.
+
+The more concise and to the point the issue is, the more likely it is to
+be understood, tracked down and resolved quickly.
+
+Long winded AI written essays can easily look overwhelming and cause our
+maintainers and other contributors to just entirely skip the issue to
+focus their energy on something else.
+
+We also don't benefit from AI generated root cause analysis or proposed
+fixes in those issues. If you yourself understand the code base well
+enough to go through that content and suggested fix, then turn it into a
+pull request and submit it yourself. Otherwise, please limit your report
+to describing the issue at hand and we'll take it from there.
+
+### For contributions
+
+We REQUIRE all contributions to Incus UI to be submitted by human beings
+who can assert full copyright ownership of their contribution or have
+been allowed by their employer to contribute. This is what the DCO (see
+below) requires of all contributors.
+
+AI tools can sometimes be beneficial, particularly when it comes to
+finding patterns among a large data set (entire code base), performing
+tedious repetitive changes or large refactoring/re-organization.
+
+While we now tolerate the use of such tools, they must abide by our
+instructions (`.agents/`) and their operators cannot override those
+instructions.
+
+We expect everyone contributing to Incus UI to fully own their
+contribution, be able to reason about it, be able to explain why things
+were done a particular way and act as the full owner of that code. AI
+tools are treated the same as traditional tooling like `sed`, `awk` or
+`coccinelle`.
+
+For the purpose of this project, AI tools CANNOT be treated as author,
+co-author or be credited in any way that would suggest any ownership
+over the contribution.
+
+The contributor should have done all the thinking, planning and
+understanding of the changes needed to resolve an issue or implement a
+new feature prior to using automated tooling to perform the grunt work.
+
+Unguided use of those tools or the inability to prove understanding of
+the code contributed will result in a loss of trust in that contributor
+by project maintainers which can then lead to exclusion from any further
+contribution to the project.
+
+It's also worth pointing out that while those tools are good at
+implementing the more boring/repetitive/grunt work. We've generally
+found that you only really understand the project and its structure by
+having done such work yourself a few times.
+
+### For anyone with write access to the repository
+
+Anyone with write access to this repository must ensure to NEVER run an
+AI agent or similar tool on a system which holds repository credentials
+(SSH key, GPG key, web browser cookies, ...).
+
+Any use of AI tooling should be done inside of a clean VM/container that
+itself cannot directly push to or alter this repository in any way.
+
+The safest approach is to SSH into that environment and then extract the
+changes using `git format-patch`, then review and apply them to your
+actual tree, tweak them as needed, sign them off and then push and open
+the pull request.
+
+Any potential credential compromise or loss of control should be
+immediately reported to `security@linuxcontainers.org`.
+
 <!-- SPDX-SnippetEnd -->
-</details>
 
-## Codebase Contributions
-Contributions to the codebase should be submitted through [pull requests on our GitHub](https://github.com/lxc/incus-ui/pulls). From there they will go through review and once approved, be merged in the main branch.
+## Reporting bugs and requesting features
 
-If you'd like to contribute to the codebase but don't know what to start with, tackling any [unassigned, open issues](https://github.com/lxc/incus-ui/issues?q=is%3Aissue%20state%3Aopen%20no%3Aassignee) is extremely appreciated!
+If you encounter a bug or would like to request a feature, [file an issue on GitHub](https://github.com/lxc/incus-ui/issues/new/choose). Issues must be filed through that form by a human being, as covered above.
 
-If you'd like to make a code contribution that is licensed differently from the rest of the project (the [Apache License, Version 2.0](/LICENSE)), follow the [Differential Code Contribution Part Guidelines](/docs/contributing/code/differential-part-guidelines.md). Follow the [REUSE Specification](https://reuse.software/spec-3.3/) to attribute the appropriate license & copyright information to your contribution.
+## Pull requests
 
-### Commits
-#### Message Structure
-Commit messages are to follow the [Conventional Commits v1.0.0 specification](https://www.conventionalcommits.org/en/v1.0.0/).
+Changes to this project should be proposed as pull requests on GitHub
+at: [`https://github.com/lxc/incus-ui`](https://github.com/lxc/incus-ui)
 
-The subject line of the commit message must be structured as follows:
+Proposed changes will then go through review there and once approved,
+be merged in the main branch.
+
+If you'd like to contribute but don't know what to start with, tackling any [unassigned, open issue](https://github.com/lxc/incus-ui/issues?q=is%3Aissue%20state%3Aopen%20no%3Aassignee) is extremely appreciated!
+
+### Commit structure
+
+Commit messages must follow the [Conventional Commits v1.0.0 specification](https://www.conventionalcommits.org/en/v1.0.0/). The subject line is structured as:
+
 ```
-[type](optional scope): [description]
+type(optional scope): description
 ```
+
+A commit introducing a breaking change adds a `!` after the type and scope:
+
+```
+type(optional scope)!: description
+```
+
 <details>
 <summary>
 Supported types
 </summary>
-The following types are supported:
 <ul>
 <li><code>fix</code>: patches a bug</li>
 <li><code>feat</code>: introduces a new feature</li>
@@ -75,76 +227,87 @@ Scopes include, but are not limited to:
 </ul>
 </details>
 
-<details>
-<summary>
-Examples
-</summary>
-<ul>
-<li><code>docs: add commit message rules</code></li>
-<li><code>docs(agents): commit message guidelines</code></li>
-</ul>
-</details>
+Examples: `docs: add commit message rules`, `docs(agents): commit message guidelines`.
 
-
-If your commit contains a breaking change, you must add a `!` after the type/scope:
-```
-[type](optional scope)!: [description]
-```
-
-#### Developer Certificate of Origin
-In order to contribute to this project's codebase, you must certify [The Developers Certificate of Origin, Version 1.1](https://raw.githubusercontent.com/lxc/incus-ui/refs/heads/main/docs/contributing/code/DCO-1.1.txt) (The DCO) for every identifiable portion of the contribution subject to the following:
-- If the [REUSE Specification, Version 3.3](https://reuse.software/spec-3.3/) (REUSE) does not indicate a license with respect to that identifiable portion, "the license indicated by REUSE with respect to that identifiable portion" is defined as the [Apache License, Version 2.0](/LICENSE).
-- For the purposes of clause (a) of The DCO, the phrase "the open source license indicated in the file" shall be read as a reference to the license indicated by REUSE with respect to that identifiable portion.
-- For the purposes of clause (b) of The DCO, references to the license "as indicated in the file" shall likewise be read as references to the license indicated by REUSE with respect to that identifiable portion.
-
-<details>
-<summary>
-How do I certify this for a commit?
-</summary>
-Your certification of this for a commit is constituted by adding a line of the following form to your commit message:
-<br>
-<code>Signed-off-by: [Full Name] &lt;[your primary email address]&gt;</code>, with the bracketed fields replaced by your own identifying information, and the brackets themselves omitted.
-<br>
-<br>
 <!--
 SPDX-SnippetBegin
 SPDX-SnippetCopyrightText: 2026 Stéphane Graber <stgraber@stgraber.org>
 -->
-An example of a valid sign-off line is <code>Signed-off-by: Random J Developer &lt;random@developer.org&gt;</code>.
-<!--
-SPDX-SnippetEnd
--->
-<br>
-<br>
-You may find <code>git commit -s</code> useful for this purpose.
-<br>
-<br>
-Note: The automated DCO check excludes merge commits so GitHub's <strong>Update branch</strong> action does not invalidate an otherwise compliant pull request. Do not introduce substantive changes while resolving a merge conflict: put those changes in a separate, signed, non-merge commit so the automated check certifies them.
-</details>
 
-### A Note on AI Tool Use
+### Developer Certificate of Origin
+
+To improve tracking of contributions to this project we use the DCO 1.1
+and use a "sign-off" procedure for all changes going into the branch.
+
+The sign-off is a simple line at the end of the explanation for the
+commit which certifies that you wrote it or otherwise have the right
+to pass it on as an open-source contribution.
+
+<!-- SPDX-SnippetEnd -->
+
+<!--
+SPDX-SnippetBegin
+SPDX-SnippetCopyrightText: (C) 2004, 2006 The Linux Foundation and its contributors
+SPDX-License-Identifier: LicenseRef-DCO-1.1
+-->
+
+```
+Developer Certificate of Origin
+Version 1.1
+
+Copyright (C) 2004, 2006 The Linux Foundation and its contributors.
+660 York Street, Suite 102,
+San Francisco, CA 94110 USA
+
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
+
+Developer's Certificate of Origin 1.1
+
+By making a contribution to this project, I certify that:
+
+(a) The contribution was created in whole or in part by me and I
+    have the right to submit it under the open source license
+    indicated in the file; or
+
+(b) The contribution is based upon previous work that, to the best
+    of my knowledge, is covered under an appropriate open source
+    license and I have the right under that license to submit that
+    work with modifications, whether created in whole or in part
+    by me, under the same open source license (unless I am
+    permitted to submit under a different license), as indicated
+    in the file; or
+
+(c) The contribution was provided directly to me by some other
+    person who certified (a), (b) or (c) and I have not modified
+    it.
+
+(d) I understand and agree that this project and the contribution
+    are public and that a record of the contribution (including all
+    personal information I submit with it, including my sign-off) is
+    maintained indefinitely and may be redistributed consistent with
+    this project or the open source license(s) involved.
+```
+
+<!-- SPDX-SnippetEnd -->
+
 <!--
 SPDX-SnippetBegin
 SPDX-SnippetCopyrightText: 2026 Stéphane Graber <stgraber@stgraber.org>
 -->
-We expect everyone contributing to the Incus UI to fully own their contribution, be able to reason about it, be able to explain why things were done a particular way and act as the full owner of that code. AI tools are treated the same as traditional tooling like `sed`, `awk`, or `coccinelle`.
 
-For the purposes of this project, AI tools CANNOT be treated as author, co-author or be credited in any way that would suggest any ownership over the contribution.
+An example of a valid sign-off line is:
 
-The contributor should have done all the thinking, planning, and understanding of the changes needed to resolve an issue or implement a new feature prior to using automated tooling to perform the grunt work.
+```
+Signed-off-by: Random J Developer <random@developer.org>
+```
 
-<details>
-<summary>
-<b>For anyone with write access to the repository</b>
-</summary>
-NEVER run an AI agent or similar tool on a system which holds repository credentials (SSH key, GPG key, web browser cookies, ...).
-<br>
-<br>
-The safest approach is to SSH into that environment and then extract the changes using <code>git format-patch</code>, then review and apply them to your actual tree, tweak them as needed, sign them off and then push and open the pull request.
-<br>
-<br>
-Any potential credential compromise or loss of control should be immediately reported to <code>security@linuxcontainers.org</code>.
-</details>
-<!--
-SPDX-SnippetEnd
--->
+Use a known identity and a valid e-mail address.
+Sorry, no anonymous contributions are allowed.
+
+We also require each commit be individually signed-off by their author,
+even when part of a larger set. You may find `git commit -s` useful.
+
+<!-- SPDX-SnippetEnd -->
+
+Your `user.name` and `user.email` must match the sign-off line, and should be associated with your GitHub account.

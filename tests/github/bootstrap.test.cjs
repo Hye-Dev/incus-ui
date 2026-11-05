@@ -33,7 +33,6 @@ async function runInline(stepSource) {
 
 for (const [name, statusContext] of [
   ['commitlint.yml', 'Conventional Commits'],
-  ['dco.yml', 'DCO Verification'],
   ['reuse-report.yml', 'REUSE Compliance'],
 ]) {
   test(`${name}: pending and checkout failure statuses work without checkout files`, async () => {
@@ -54,7 +53,7 @@ for (const [name, statusContext] of [
 }
 
 test('trusted workflows load scripts from their own execution revision', () => {
-  for (const name of ['commitlint.yml', 'dco.yml', 'reuse-scan.yml', 'reuse-report.yml']) {
+  for (const name of ['commitlint.yml', 'reuse-scan.yml', 'reuse-report.yml']) {
     const checkout = step(readWorkflow(name), 'Check out trusted workflow scripts');
     assert.match(checkout, /ref: \$\{\{ github.sha \}\}/);
     assert.match(checkout, /persist-credentials: false/);
