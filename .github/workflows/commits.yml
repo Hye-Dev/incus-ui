@@ -1,0 +1,46 @@
+# SPDX-FileCopyrightText: 2026 Contributors to Incus <https://github.com/lxc/incus>
+# SPDX-License-Identifier: Apache-2.0
+
+name: Commits
+
+on:
+  - pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  llm-commit-policy:
+    permissions:
+      contents: none
+    name: LLM commit policy
+    runs-on: ubuntu-latest
+    steps:
+      # Only git metadata is inspected, never project code.
+      - name: Check out code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check LLM commit policy
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+
+          # Inspired by https://github.com/yaml/go-yaml/pull/340
+          agents="(aider|anthropic|claude|codex|copilot|devin|gemini|grok|openai)"
+
+          commits=$(git rev-list "${BASE_SHA}..${HEAD_SHA}")
+          for commit in $commits; do
+              if git log -n 1 "$commit" | tr '[:upper:]' '[:lower:]' | grep -qE "(author|assisted-by|co-authored-by|signed-off-by):.*$agents"; then
+                  echo "Error: The following commit appears to violate this repo's LLM/AI contribution policy:"
+                  echo ""
+                  git log -n 1 "$commit"
+
+                  exit 1
+              fi
+          done
