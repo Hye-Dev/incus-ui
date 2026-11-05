@@ -24,7 +24,7 @@ jobs:
     steps:
       # Bootstrap status reporting must work without repository scripts.
       - name: Mark check as pending
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const language = { description: 'Checking every PR commit with commitlint.' };
@@ -57,7 +57,7 @@ jobs:
 
       - name: Fetch every PR commit message
         id: fetch-commits
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           COMMITS_FILE: ${{ runner.temp }}/commitlint-commits.json
         with:
@@ -74,7 +74,7 @@ jobs:
 
       - name: Publish commitlint status
         if: always() && steps.checkout.outcome == 'success'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
           FETCH_OUTCOME: ${{ steps.fetch-commits.outcome }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: Report checkout failure
         if: always() && steps.checkout.outcome != 'success'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const language = { description: 'Trusted workflow scripts could not be checked out. See the workflow logs.' };
