@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Contributors to Incus <https://github.com/lxc/incus>
+# SPDX-License-Identifier: Apache-2.0
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels: []
+    schedule:
+      interval: "weekly"
