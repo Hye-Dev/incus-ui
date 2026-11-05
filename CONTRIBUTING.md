@@ -124,7 +124,7 @@ finding patterns among a large data set (entire code base), performing
 tedious repetitive changes or large refactoring/re-organization.
 
 While we now tolerate the use of such tools, they must abide by our
-instructions (`.agents/`) and their operators cannot override those
+instructions (`AGENTS.md`) and their operators cannot override those
 instructions.
 
 We expect everyone contributing to Incus UI to fully own their
