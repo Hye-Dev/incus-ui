@@ -11,4 +11,6 @@ AGENTS.md @stgraber
 CODE_OF_CONDUCT.md @stgraber
 CONTRIBUTING.md @stgraber
 .agents/skills/commit-messages/ @stgraber
-.agents/skills/differential-licenses/ @stgraber
+.agents/skills/differential-licensing/ @stgraber
+.claude/skills/commit-messages/ @stgraber
+.claude/skills/differential-licensing/ @stgraber
