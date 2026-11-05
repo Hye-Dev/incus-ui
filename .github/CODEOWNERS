@@ -8,5 +8,7 @@ AGENTS.md @stgraber
 .github/workflows/slop.yml @stgraber
 .github/workflows/commits.yml @stgraber
 .github/dependabot.yml @stgraber
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
+CODE_OF_CONDUCT.md @stgraber
+CONTRIBUTING.md @stgraber
+.agents/skills/commit-messages/ @stgraber
+.agents/skills/differential-licenses/ @stgraber
