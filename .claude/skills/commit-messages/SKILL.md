@@ -8,4 +8,4 @@ AI models are not permitted to:
 
 Follow the [commit message guidelines](../../../.agents/skills/commit-messages/guidelines.md) when writing commit messages. These do not apply to PR titles.
 
-If a contribution is being made under a differential license, also follow the [differential-licensing](../differential-licensing/SKILL.md) skill.
+If a contribution is being made under a differential license, also follow the [licensing](../licensing/SKILL.md) skill.
