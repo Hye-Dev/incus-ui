@@ -77,8 +77,27 @@ test("project acquisition failure retains permitted content, and retry and prove
 	});
 	const emptyPage = await newEmptyPage();
 	await emptyPage.goto(empty.url);
+	await attachClient(emptyPage);
+	await emptyPage.evaluate(() => {
+		window.emptyProjects = window.vem.client.watch(
+			window.vem.projects.list({ select: ["name"] }),
+			{ acquire: false },
+		);
+	});
 	await trigger(emptyPage).click();
-	await expect.poll(() => reads(empty)).toBe(1);
+	await expect
+		.poll(() =>
+			emptyPage.evaluate(() => {
+				const result = window.emptyProjects.getSnapshot();
+				return {
+					settled: result.settled,
+					complete: result.confirmed.complete,
+					rows: result.rows.length,
+					issues: result.issues,
+				};
+			}),
+		)
+		.toEqual({ settled: true, complete: true, rows: 0, issues: [] });
 	await expect(
 		emptyPage.getByLabel("Loading projects", { exact: true }),
 	).toHaveCount(0);
@@ -86,6 +105,7 @@ test("project acquisition failure retains permitted content, and retry and prove
 		emptyPage.getByText("No projects are available.", { exact: true }),
 	).toHaveCount(0);
 	await expect(option(emptyPage, "All projects")).toBeEnabled();
+	await emptyPage.evaluate(() => window.emptyProjects.dispose());
 });
 
 test("access withdrawal preserves the choice and missed rename evidence never becomes an inferred alias", {
