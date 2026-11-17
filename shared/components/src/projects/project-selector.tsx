@@ -92,6 +92,7 @@ export function ProjectSelector({
 		>
 			<Combobox
 				virtualized
+				openOnInputClick={false}
 				items={options.options}
 				filteredItems={options.filtered}
 				isItemEqualToValue={(item, value) => item.key === value.key}
@@ -131,6 +132,7 @@ export function ProjectSelector({
 					/>
 					<ComboboxInput
 						ref={input}
+						onClick={() => setOpen(true)}
 						aria-label={messages.label}
 						aria-describedby={descriptionId}
 						placeholder={messages.searchPlaceholder}

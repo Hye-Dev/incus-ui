@@ -149,15 +149,21 @@ test("shared components work without the application shell, styles, or Tailwind"
 				name: "All projects",
 				exact: true,
 			});
-			const immediatelyAvailable = await all.isVisible();
-			if (immediatelyAvailable) await all.tap();
-			await page.clock.runFor(1000);
-			if (!immediatelyAvailable) await all.tap();
+			await expect(all).toBeVisible();
+			await all.tap();
 			await page.clock.runFor(1000);
 			await expect(input).toHaveValue("All projects");
 			await expect(input).toHaveAttribute("aria-expanded", "false");
 			await expect(input).toBeFocused();
 			await expect(input).toHaveCSS("caret-color", "rgba(0, 0, 0, 0)");
+			await input.tap();
+			await page.clock.runFor(1000);
+			await expect(all).toBeVisible();
+			await input.tap();
+			await all.tap();
+			await page.clock.runFor(1000);
+			await expect(input).toHaveValue("All projects");
+			await expect(input).toHaveAttribute("aria-expanded", "false");
 		},
 	);
 

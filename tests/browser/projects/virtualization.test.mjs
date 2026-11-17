@@ -192,9 +192,16 @@ test("large project lists acquire visible descriptions and preserve search, keyb
 	api.addProject("project-500");
 	await trigger(page).click();
 	await trigger(page).fill("project-500");
-	await expect(option(page, "project-500")).toHaveAccessibleDescription(
-		"project-500 project",
-	);
+	try {
+		await expect(option(page, "project-500")).toHaveAccessibleDescription(
+			"project-500 project",
+		);
+	} catch (error) {
+		t.diagnostic(
+			`Recent Incus requests: ${JSON.stringify(api.requests.slice(-40))}`,
+		);
+		throw error;
+	}
 	assert.equal(
 		inventoryReads(api),
 		1,
