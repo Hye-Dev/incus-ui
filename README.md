@@ -14,7 +14,7 @@ Manage your [Incus](https://github.com/lxc/incus) deployment from the web.
 ## Roadmap
 Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️.
 
-We follow a bi-weekly release cycle, shipping a release alongside each monthly Incus feature update, and an additional release in-between.
+We follow a fortnightly release cycle, shipping a release alongside each monthly Incus feature update, and an additional release in-between.
 
 For a holistic detailed roadmap for each planned version, see our [GitHub Milestones](https://github.com/lxc/incus-ui/milestones).
 
