@@ -12,17 +12,35 @@
 			"**/.vscode/**/*",
 			"**/index.html",
 			"**/vite.config.ts",
+			"shared/data/tests/**",
+			"tests/dev/**",
+			"tests/react/**",
+			"shared/state/tests/**",
+			"shared/components/tests/**",
+			"vitest.config.ts",
+			"tests/browser/**",
+			"tests/architecture/**",
 			"!**/src/routeTree.gen.ts",
-			"!**/src/lib/incus/api/schema.ts",
-			"!**/src/lib/incus/api/rest-api.yaml",
-			"!**/src/styles.css"
+			"!**/transport/generated",
+			"!**/dist",
+			"!**/src/styles.css",
+			"scripts/**/*.ts",
+			"scripts/**/*.mjs",
+			"tests/artifacts/**",
+			"!**/node_modules"
 		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {

@@ -1,0 +1,39 @@
+{
+  "source": {
+    "release": "v7.6.0",
+    "commit": "8f5e6c2235f6424ec59d3dc06f12e344a4a416e2",
+    "url": "https://raw.githubusercontent.com/lxc/incus/8f5e6c2235f6424ec59d3dc06f12e344a4a416e2/doc/rest-api.yaml",
+    "sha256": "25d057e5aab991d9393a29ff95548195c30b16fb8490605581564dfb2a01e183",
+    "typeOptions": {
+      "alphabetize": true,
+      "emptyObjectsUnknown": true
+    },
+    "generators": {
+      "swagger2openapi": "7.0.8",
+      "openapi-typescript": "7.13.0",
+      "yaml": "2.9.1",
+      "typescript": "5.9.3"
+    }
+  },
+  "conversion": {
+    "from": "Swagger 2.0",
+    "to": "OpenAPI 3.0.0",
+    "patch": false
+  },
+  "models": "components.schemas",
+  "operations": "paths and operations",
+  "limitations": [
+    "Types describe the pinned upstream document; they do not validate runtime responses.",
+    "The upstream document contains query-bearing path keys, which are not valid OpenAPI paths.",
+    "Several upstream models omit required properties; the generated properties remain optional.",
+    "File endpoints omit response content and misdescribe raw request bodies and mode headers.",
+    "The operation recursion=1 response is documented as an array but the server returns a status-keyed map.",
+    "WebSocket upgrade descriptions do not define the complete messaging protocols.",
+    "ETag and If-Match headers are incompletely described upstream."
+  ],
+  "upstreamReferences": [
+    "https://github.com/lxc/incus/blob/8f5e6c2235f6424ec59d3dc06f12e344a4a416e2/doc/rest-api.yaml",
+    "https://github.com/lxc/incus/blob/8f5e6c2235f6424ec59d3dc06f12e344a4a416e2/cmd/incusd/instance_file.go",
+    "https://github.com/lxc/incus/blob/8f5e6c2235f6424ec59d3dc06f12e344a4a416e2/cmd/incusd/operations.go"
+  ]
+}

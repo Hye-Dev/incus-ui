@@ -12,9 +12,9 @@ Manage your [Incus](https://github.com/lxc/incus) deployment from the web.
 <p align="center">Incus UI Application Shell</p>
 
 ## Roadmap
-Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️. The first release (v0.1) is scheduled for November 12th, which will cement this foundation. From there, robust primitive implementation will begin.
+Incus UI is currently in its infancy and **its foundation is still under construction** 🏗️.
 
-We follow a semi-monthly release cycle, shipping a release alongside each monthly Incus feature update, and an additional release in-between.
+We follow a fortnightly release cycle, shipping a release alongside each monthly Incus feature update, and an additional release in-between.
 
 For a holistic detailed roadmap for each planned version, see our [GitHub Milestones](https://github.com/lxc/incus-ui/milestones).
 
@@ -40,8 +40,6 @@ Incus UI supports the latest Incus release [in each actively maintained Incus ch
 ### Instructions
 #### 1. Download an Incus UI Archive
 ##### Edge Builds
-As the first version of Incus UI has not yet released, this is the **only version available** to install until 11/12/2026.
-
 Edge builds are compiled as code is merged into the main branch. These <!-- are not officially supported, however, --> grant you access to features before they appear in the upcoming release.
 
 Download the `incus-ui.tar.gz` artifact from a successful run of the [Build Edge workflow](https://github.com/lxc/incus-ui/actions/workflows/build-edge.yml). GitHub Actions downloads artifacts as zip files, so unzip the download first to obtain `incus-ui.tar.gz`.

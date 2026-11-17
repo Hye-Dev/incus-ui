@@ -1,16 +1,19 @@
 // SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
 // SPDX-License-Identifier: Apache-2.0
 
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
 	createRootRoute,
 	HeadContent,
 	Outlet,
 	Scripts,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { lazy, Suspense } from "react";
 
 import "../styles.css";
+
+const Devtools = import.meta.env.DEV
+	? lazy(() => import("@/development/devtools"))
+	: () => null;
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -28,17 +31,11 @@ function RootDocument() {
 		<>
 			<HeadContent />
 			<Outlet />
-			<TanStackDevtools
-				config={{
-					position: "bottom-right",
-				}}
-				plugins={[
-					{
-						name: "Tanstack Router",
-						render: <TanStackRouterDevtoolsPanel />,
-					},
-				]}
-			/>
+			{import.meta.env.DEV && (
+				<Suspense>
+					<Devtools />
+				</Suspense>
+			)}
 			<Scripts />
 		</>
 	);
