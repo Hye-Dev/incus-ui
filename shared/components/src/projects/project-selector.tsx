@@ -98,7 +98,11 @@ export function ProjectSelector({
 				isItemEqualToValue={(item, value) => item.key === value.key}
 				itemToStringLabel={(item) => item.name ?? messages.allProjects}
 				open={open}
-				onOpenChange={(next) => {
+				onOpenChange={(next, details) => {
+					if (details.reason === "input-clear") {
+						details.cancel();
+						return;
+					}
 					setOpen(next);
 					if (!next) setSearch("");
 				}}

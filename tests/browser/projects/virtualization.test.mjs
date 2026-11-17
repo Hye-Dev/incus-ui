@@ -152,10 +152,23 @@ test("large project lists acquire visible descriptions and preserve search, keyb
 		"search reuses the name inventory; server filtering resolves unknown descriptions",
 	);
 	await trigger(page).fill("");
-	for (let index = 0; index < 16; index++)
-		await page.keyboard.press("ArrowDown");
-	await expect(option(page, "project-014")).toBeVisible();
+	await expect(option(page, "project-000")).toHaveAttribute(
+		"aria-setsize",
+		String(names.length + 1),
+	);
 	const highlighted = page.locator('[role="option"][data-highlighted]');
+	await page.keyboard.press("ArrowDown");
+	await expect(highlighted).toBeVisible();
+	const firstPosition = Number(await highlighted.getAttribute("aria-posinset"));
+	assert.ok(firstPosition === 1 || firstPosition === 2);
+	for (let index = 1; index < 16; index++) {
+		await page.keyboard.press("ArrowDown");
+		await expect(highlighted).toHaveAttribute(
+			"aria-posinset",
+			String(firstPosition + index),
+		);
+	}
+	await expect(option(page, "project-014")).toBeVisible();
 	await expect(highlighted).toBeVisible();
 	assert.ok(Number(await highlighted.getAttribute("aria-posinset")) > 10);
 	await trigger(page).fill("project-499");

@@ -78,6 +78,20 @@ test("shared components work without the application shell, styles, or Tailwind"
 		await expect(page.getByRole("status", { name: "Selection" })).toHaveText(
 			"development",
 		);
+		for (const selected of ["development", "All projects"]) {
+			await input.click();
+			await input.fill("d");
+			await input.press("Backspace");
+			await expect(input).toHaveValue("");
+			await expect(input).toHaveAttribute("aria-expanded", "true");
+			await expect(
+				page.getByRole("option", { name: selected, exact: true }),
+			).toHaveAttribute("aria-selected", "true");
+			await page
+				.getByRole("option", { name: "All projects", exact: true })
+				.click();
+			await expect(input).toHaveValue("All projects");
+		}
 		await page.goto(new URL("?named-only", server.resolvedUrls.local[0]).href);
 		await expect(input).toHaveValue("default");
 		await input.click();
