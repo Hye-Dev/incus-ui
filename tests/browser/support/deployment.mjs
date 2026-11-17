@@ -21,7 +21,6 @@ export async function deployment({
 	discoveryUnavailable = false,
 	projectNames = ["default"],
 	projectDescriptions = {},
-	projectFiltering = true,
 } = {}) {
 	const root = resolve("dist");
 	const requests = [];
@@ -111,7 +110,7 @@ export async function deployment({
 								"instances",
 								"instance_state",
 								"resources",
-								...(projectFiltering ? ["api_filtering_extended"] : []),
+								"api_filtering_extended",
 							]
 						: undefined,
 					public: false,

@@ -36,12 +36,6 @@ test("project search offers filtered URL membership and recursive representation
 			);
 		});
 		try {
-			observe(
-				app.runtime,
-				"server",
-				{},
-				{ api_extensions: ["api_filtering_extended"] },
-			);
 			const result = await app.runtime.read(
 				projects.list({
 					select: recursive ? ["name", "description"] : ["name"],
@@ -104,12 +98,6 @@ test("project search encodes literal text safely and keeps accents significant",
 			);
 		});
 		try {
-			observe(
-				app.runtime,
-				"server",
-				{},
-				{ api_extensions: ["api_filtering_extended"] },
-			);
 			const result = await app.runtime.read(
 				projects.list({
 					select: ["name"],
@@ -136,10 +124,7 @@ test("project search encodes literal text safely and keeps accents significant",
 });
 
 test("unsupported Incus text semantics use a broader representation and then reuse known values", async () => {
-	for (const [advertised, text, accents] of [
-		[false, "café", "sensitive"],
-		[true, "cafe", "insensitive"],
-	] as const) {
+	for (const text of ["cafe", "CAFÉ"]) {
 		const reads: URL[] = [];
 		const app = harness(async (input) => {
 			const url = new URL(String(input));
@@ -153,16 +138,14 @@ test("unsupported Incus text semantics use a broader representation and then reu
 			]);
 		});
 		try {
-			observe(
-				app.runtime,
-				"server",
-				{},
-				{ api_extensions: advertised ? ["api_filtering_extended"] : [] },
-			);
 			const query = projects.list({
 				select: ["name"],
 				where: {
-					description: { contains: text, case: "insensitive", accents },
+					description: {
+						contains: text,
+						case: "insensitive",
+						accents: "insensitive",
+					},
 				},
 			});
 			const result = await app.runtime.read(query);

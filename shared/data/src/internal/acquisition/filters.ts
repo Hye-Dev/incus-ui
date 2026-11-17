@@ -33,14 +33,7 @@ export function incusTextFilters(
 		operators: ["contains"],
 		combinations: ["all", "any"],
 		text: [{ case: "insensitive", accents: "sensitive" }],
-		supports: (expression, context) => {
-			const extensions = context.get("server", {})?.values.api_extensions;
-			return (
-				Array.isArray(extensions) &&
-				extensions.includes("api_filtering_extended") &&
-				clauses(expression)
-			);
-		},
+		supports: (expression) => clauses(expression),
 	};
 }
 
