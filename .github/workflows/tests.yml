@@ -46,3 +46,56 @@ jobs:
         run: |
           node --test tests/github/*.test.cjs
           python -B -m unittest discover -s tests/github
+
+  application:
+    name: Application validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install application and schema tooling
+        run: |
+          npm ci
+          npm ci --prefix scripts/api
+
+      - name: Verify generated API contracts
+        run: node scripts/api/generate.mjs --check
+
+      - name: Check source and types
+        run: |
+          npm run check
+          npm run typecheck
+          npm run test:architecture
+
+      - name: Test Incus, React behavior, and development proxy
+        run: |
+          npm run test:incus
+          npm run test:dev
+          npm run test:react
+
+      - name: Test isolated package consumption
+        run: |
+          npm run test:vem-package
+
+      - name: Build and verify deployment artifacts
+        run: |
+          npm run build
+          npm run test:artifacts
+
+      - name: Install browser engines
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Test shared browser behavior
+        run: |
+          npm run test:browser
+          PLAYWRIGHT_BROWSER=firefox npm run test:browser
