@@ -1,0 +1,11 @@
+{
+  "name": "incus-ui-api-generation",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "swagger2openapi": "7.0.8",
+    "typescript": "5.9.3",
+    "yaml": "2.9.1"
+  }
+}

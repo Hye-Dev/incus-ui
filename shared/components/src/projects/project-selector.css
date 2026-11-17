@@ -1,0 +1,172 @@
+/* SPDX-FileCopyrightText: 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com> */
+/* SPDX-License-Identifier: Apache-2.0 */
+
+@layer theme, vem, incus-components;
+
+@layer incus-components {
+	.incus-project-selector {
+		max-inline-size: 100%;
+	}
+	.project-selector-anchor {
+		position: relative;
+		inline-size: var(--incus-project-selector-width, 12rem);
+		max-inline-size: 100%;
+	}
+	.incus-project-selector[data-open] .project-selector-anchor {
+		inline-size: var(--incus-project-selector-open-width, 18rem);
+	}
+	.incus-project-selector-position {
+		pointer-events: none;
+		position: absolute;
+		inset-block: 0;
+		inset-inline-end: 0;
+		inline-size: 1px;
+	}
+	.incus-project-selector-control {
+		inline-size: 100%;
+	}
+	.incus-project-selector-trigger[data-pressed] {
+		background: transparent;
+	}
+	.incus-project-selector-input {
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		transition: none;
+	}
+	.incus-project-selector:not([data-open]) .incus-project-selector-input {
+		cursor: pointer;
+		color: transparent;
+		caret-color: transparent;
+	}
+	.incus-project-selector:not([data-open])
+		.incus-project-selector-input::selection {
+		background: transparent;
+	}
+	.incus-project-selector[data-warning] .incus-project-selector-control {
+		border-color: var(--destructive);
+		color: var(--destructive);
+		background: color-mix(in oklab, var(--destructive) 10%, transparent);
+	}
+	.incus-project-selector-icon {
+		inline-size: 1rem;
+		block-size: 1rem;
+		flex-shrink: 0;
+	}
+	.incus-project-selector-label {
+		pointer-events: none;
+		position: absolute;
+		inset-block: 0;
+		inset-inline: 0.75rem 2.25rem;
+		display: flex;
+		align-items: center;
+		min-inline-size: 0;
+		font-size: 0.875rem;
+	}
+	.incus-project-selector-label[data-leading-icon] {
+		inset-inline-start: 2rem;
+	}
+	.incus-project-selector[data-warning] .incus-project-selector-label,
+	.incus-project-selector-danger {
+		color: var(--destructive);
+	}
+	.incus-project-selector-text {
+		inline-size: 100%;
+	}
+	.incus-project-selector-popup {
+		display: flex;
+		flex-direction: column;
+		inline-size: var(--incus-project-selector-popup-width, 18rem);
+		max-inline-size: calc(100vw - 2rem);
+	}
+	.project-selector-message {
+		flex-shrink: 0;
+		padding: 0.5rem 0.75rem;
+		border-block-end: 1px solid var(--border);
+	}
+	.incus-project-selector-selection-message {
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+	.incus-project-selector-selection-message p {
+		margin: 0;
+	}
+	.incus-project-selector-muted {
+		color: var(--muted-foreground);
+	}
+	.incus-project-selector-project-name {
+		font-weight: 500;
+		color: var(--foreground);
+		word-break: break-all;
+	}
+	.incus-project-selector-status {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+	}
+	.incus-project-selector-warning {
+		color: light-dark(#a65f00, #ffb900);
+	}
+	.incus-project-selector-status-text {
+		min-inline-size: 0;
+		flex: 1;
+	}
+	.incus-project-selector-list {
+		min-block-size: 0;
+		flex-shrink: 1;
+	}
+	.incus-project-selector-option-text {
+		display: flex;
+		min-inline-size: 0;
+		flex: 1;
+		flex-direction: column;
+	}
+	.incus-project-selector-description {
+		inline-size: 100%;
+		font-size: 0.75rem;
+		line-height: 1rem;
+		color: var(--muted-foreground);
+	}
+	.incus-project-selector-empty {
+		flex-shrink: 0;
+		padding: 0.5rem 0.75rem;
+		border-block-start: 1px solid var(--border);
+		font-size: 0.75rem;
+		line-height: 1rem;
+		color: var(--muted-foreground);
+	}
+	.incus-project-selector-accessible {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border-width: 0;
+	}
+	@media (pointer: coarse) {
+		.incus-project-selector-retry {
+			min-block-size: 2.75rem;
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.project-selector-anchor {
+			transition: inline-size var(--vem-combobox-duration, 160ms)
+				var(--vem-combobox-easing, cubic-bezier(0.2, 0, 0, 1));
+		}
+		.project-selector-message {
+			transition:
+				opacity var(--vem-combobox-duration, 160ms)
+				var(--vem-combobox-easing, cubic-bezier(0.2, 0, 0, 1)),
+				translate var(--vem-combobox-duration, 160ms)
+				var(--vem-combobox-easing, cubic-bezier(0.2, 0, 0, 1));
+			@starting-style {
+				opacity: 0;
+				translate: 0 -3px;
+			}
+		}
+	}
+}

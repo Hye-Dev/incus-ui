@@ -32,7 +32,5 @@
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "explicit"
 	},
-	"cSpell.words": [
-		"clickability"
-	],
+	"cSpell.words": ["clickability"]
 }

@@ -1,14 +1,14 @@
 // SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
 // SPDX-License-Identifier: Apache-2.0
 
-import { createFileRoute } from "@tanstack/react-router";
-import Header from "@/components/layout/view";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
-	BreadcrumbLink,
 	BreadcrumbList,
-} from "@/components/ui/breadcrumb";
+	BreadcrumbPage,
+} from "@hyecompany/vem-ui";
+import { createFileRoute } from "@tanstack/react-router";
+import { ViewHeader } from "@/layout/view";
 
 export const Route = createFileRoute("/_ui/instances")({
 	component: RouteComponent,
@@ -16,14 +16,14 @@ export const Route = createFileRoute("/_ui/instances")({
 
 function RouteComponent() {
 	return (
-		<Header>
+		<ViewHeader>
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink>Instances</BreadcrumbLink>
+						<BreadcrumbPage>Instances</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-		</Header>
+		</ViewHeader>
 	);
 }

@@ -2,9 +2,9 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 
+@layer theme, base, vem, components, utilities;
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "@hyecompany/vem-ui/styles.css";
 @import "@fontsource-variable/inter";
 
 @custom-variant dark (&:is(.dark *));
@@ -119,64 +119,6 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
-}
-
-/* Visuals share one press origin while the links and buttons stay fixed. */
-.nav-surface {
-  --disclosure-width: 4rem;
-  --press-scale-x: 1;
-  --press-scale-y: 1;
-  --press-duration: 260ms;
-  --press-easing: cubic-bezier(0.2, 1.2, 0.3, 1);
-}
-
-.nav-surface::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  background: color-mix(in oklab, var(--sidebar-foreground) 3%, transparent);
-  opacity: 0;
-  transform: scale(var(--press-scale-x), var(--press-scale-y));
-  transform-origin: var(--press-x, 50%) var(--press-y, 50%);
-  transition: transform var(--press-duration) var(--press-easing), opacity 120ms ease-out,
-    background-color 180ms ease-out;
-}
-
-.nav-surface [data-press-visual] {
-  scale: var(--press-scale-x) var(--press-scale-y);
-  transform-origin: var(--press-x, 50%) var(--press-y, 50%);
-  transition: width 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease-out,
-    scale var(--press-duration) var(--press-easing);
-}
-
-.nav-surface:hover::before,
-.nav-surface[data-active="true"]::before,
-.nav-surface[data-active=""]::before {
-  opacity: 1;
-}
-
-.nav-surface[data-active="true"]::before,
-.nav-surface[data-active=""]::before {
-  background: color-mix(in oklab, var(--sidebar-foreground) 8%, transparent);
-}
-
-.nav-surface:active,
-.nav-surface:has(> a:active),
-.nav-surface:has(> button:active) {
-  --press-scale-x: 0.96;
-  --press-scale-y: 0.94;
-  --press-duration: 100ms;
-  --press-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.nav-surface:active::before,
-.nav-surface:has(> a:active)::before,
-.nav-surface:has(> button:active)::before {
-  opacity: 1;
 }
 
 @layer base {

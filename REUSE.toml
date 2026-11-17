@@ -7,17 +7,17 @@ incus-ui-default-attribution = true
 SPDX-License-Identifier = "Apache-2.0"
 SPDX-FileCopyrightText = "Contributors to Incus UI <https://github.com/lxc/incus-ui>"
 
-# Differential Licensing Agent Skill
+# Licensing Agent Skill
 [[annotations]]
-path = [".agents/skills/differential-licensing/references/reuse-spec-3.3.md"]
+path = [".agents/skills/licensing/references/reuse-spec-3.3.md"]
 precedence = "override"
 SPDX-FileCopyrightText = "2019 Free Software Foundation Europe e.V."
 SPDX-License-Identifier = "CC-BY-SA-4.0"
 
 [[annotations]]
 path = [
-    ".agents/skills/differential-licensing/SKILL.md",
-    ".claude/skills/differential-licensing/SKILL.md"
+    ".agents/skills/licensing/SKILL.md",
+    ".claude/skills/licensing/SKILL.md"
     ]
 SPDX-FileCopyrightText = [
     "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>",
@@ -36,9 +36,14 @@ precedence = "aggregate"
 [[annotations]]
 path = [
     ".agents/skills/commit-messages/SKILL.md",
-    ".claude/skills/commit-messages/SKILL.md",
-    "components.json",
-    "tsconfig.json"
+    ".claude/skills/commit-messages/SKILL.md"
     ]
 SPDX-FileCopyrightText = "© 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>"
+SPDX-License-Identifier = "Apache-2.0"
+
+#--- Contributors to Incus
+[[annotations]]
+path = "shared/data/src/transport/generated/rest-api.yaml"
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Contributors to Incus <https://github.com/lxc/incus>"
 SPDX-License-Identifier = "Apache-2.0"

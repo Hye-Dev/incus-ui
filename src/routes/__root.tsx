@@ -1,18 +1,19 @@
 // SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com>
 // SPDX-License-Identifier: Apache-2.0
 
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
 	createRootRoute,
 	HeadContent,
 	Outlet,
 	Scripts,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { CollectionDevtoolsPanel } from "@/components/debug/collection-devtools-panel";
-import { EventsDevtoolsPanel } from "@/components/debug/events-devtools-panel";
+import { lazy, Suspense } from "react";
 
 import "../styles.css";
+
+const Devtools = import.meta.env.DEV
+	? lazy(() => import("@/development/devtools"))
+	: () => null;
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -31,25 +32,9 @@ function RootDocument() {
 			<HeadContent />
 			<Outlet />
 			{import.meta.env.DEV && (
-				<TanStackDevtools
-					config={{
-						position: "bottom-right",
-					}}
-					plugins={[
-						{
-							name: "Tanstack Router",
-							render: <TanStackRouterDevtoolsPanel />,
-						},
-						{
-							name: "Incus Events",
-							render: <EventsDevtoolsPanel />,
-						},
-						{
-							name: "Collections",
-							render: <CollectionDevtoolsPanel />,
-						},
-					]}
-				/>
+				<Suspense>
+					<Devtools />
+				</Suspense>
 			)}
 			<Scripts />
 		</>

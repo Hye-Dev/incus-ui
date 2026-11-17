@@ -1,0 +1,25 @@
+/* SPDX-FileCopyrightText: © 2026 Joseph Maldjian <joseph.maldjian@hyecompany.com> */
+/* SPDX-License-Identifier: Apache-2.0 */
+
+.incus-app-project-selector {
+	--incus-project-selector-width: 9rem;
+	--incus-project-selector-open-width: 14rem;
+	margin-inline-start: auto;
+	flex-shrink: 0;
+	max-inline-size: calc(100vw - 6rem);
+}
+
+.incus-app-project-selector-popup {
+	--incus-project-selector-popup-width: 14rem;
+}
+
+@media (min-width: 40rem) {
+	.incus-app-project-selector {
+		--incus-project-selector-width: 12rem;
+		--incus-project-selector-open-width: 18rem;
+	}
+
+	.incus-app-project-selector-popup {
+		--incus-project-selector-popup-width: 18rem;
+	}
+}

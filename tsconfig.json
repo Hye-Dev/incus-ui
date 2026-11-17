@@ -1,11 +1,11 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "scripts/api/node_modules"],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
     "module": "ESNext",
     "paths": {
-      "#collection-debug": ["./src/hooks/incus/collection-watch-debug-stub.ts"],
       "@/*": ["./src/*"],
     },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
