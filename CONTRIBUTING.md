@@ -9,6 +9,8 @@ The Incus UI team appreciates contributions to the project, through pull request
 
 Check the following guidelines before contributing to the project.
 
+For code contributions, start with the [development environment](docs/contributing/code/development-environment.md), [source organization](docs/contributing/code/source-organization.md), and [test guide](tests/README.md).
+
 ## Code of Conduct
 
 When contributing, you must adhere to the Code of Conduct, which is available at: [`https://github.com/lxc/incus-ui/blob/main/CODE_OF_CONDUCT.md`](https://github.com/lxc/incus-ui/blob/main/CODE_OF_CONDUCT.md)
